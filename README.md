@@ -32,3 +32,22 @@ We need to design an intuitive and user-friendly interface to make it easy for u
 
 ## Testing: 
 Follow a testing plan to ensure the application's functionality, security, and performance meet the specified requirements.
+
+## Conventions: 
+Please create a branch using your student name i.e Bsclmr00001
+
+### Program Structure
+open-source-bu-tracker-group-f/
+    app.py
+    venv/
+    templates/
+        ...
+    static/
+        css/
+            ...
+        js/
+            ...
+        images/
+            ...
+    .gitignore
+    README.md
