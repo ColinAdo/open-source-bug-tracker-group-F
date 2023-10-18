@@ -35,19 +35,3 @@ Follow a testing plan to ensure the application's functionality, security, and p
 
 ## Conventions: 
 Please create a branch using your student name i.e Bsclmr00001
-
-### Program Structure
-#### open-source-bu-tracker-group-f/
-#### app.py
-#### venv/
-#### templates/
-####    ...
-#### static/
-####    css/
-####        ...
-####    js/
-####        ...
-####    images/
-####        ...
-#### .gitignore
-#### README.md
