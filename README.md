@@ -32,3 +32,6 @@
 
     ## Testing: 
     Follow a testing plan to ensure the application's functionality, security, and performance meet the specified requirements.
+
+    ### Conventions
+    Please create a branch using your student number i.e Bsclmr00001
