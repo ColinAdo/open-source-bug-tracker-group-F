@@ -38,16 +38,16 @@ Please create a branch using your student name i.e Bsclmr00001
 
 ### Program Structure
 open-source-bu-tracker-group-f/
-    app.py
-    venv/
-    templates/
+app.py
+venv/
+templates/
+    ...
+static/
+    css/
         ...
-    static/
-        css/
-            ...
-        js/
-            ...
-        images/
-            ...
-    .gitignore
-    README.md
+    js/
+        ...
+    images/
+        ...
+.gitignore
+README.md
