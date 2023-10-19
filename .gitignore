@@ -3,6 +3,7 @@ env/
 
 # Ignore generated Python bytecode
 __pycache__/
+app/__pycache__/
 
 # Ignore local configuration files
 instance/
