@@ -74,6 +74,16 @@ class Issue(db.Model):
     def __repr__(self):
         return '<Issue {}>'.format(self.title)
     
+class Repository(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), unique=True, index=True)  
+    description = db.Column(db.String(500))  
+    issues = db.relationship('Issue', backref='repository', lazy='dynamic')  
+    created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Repository {}>'.format(self.title)
+    
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     issue_id = db.Column(db.Integer, db.ForeignKey('issue.id'), nullable=False)
