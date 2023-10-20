@@ -1,5 +1,6 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user
+from flask_login import login_required
 from flask import render_template
 from app.models import User
 from app import app
@@ -7,6 +8,7 @@ from app.forms import LoginForm, RegistrationForm
 from app import db
 
 @app.route('/')
+@login_required
 def index():
     template = 'core/index.html'
     return render_template(template, title='Home Page')

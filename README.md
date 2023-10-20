@@ -37,4 +37,13 @@ Follow a testing plan to ensure the application's functionality, security, and p
 Please create a branch using your student name i.e Bsclmr00001
 Locate your flask_login/utils.py that is: /path/to/your/virtualenv/lib/python3.10/site-packages/flask_login/utils.py.
 
-Remove this imports: from werkzeug.urls import url_decode and from werkzeug.urls import endecode and the paste this code; from werkzeug.datastructures import MultiDict
+Remove this imports: 
+from werkzeug.urls import url_decode
+from werkzeug.urls import endecode and the paste this code; 
+
+And add this imports 
+from werkzeug.datastructures import MultiDict
+from urllib.parse import urlencode
+
+Rename the url_decode function in the file to MultiDict
+Rename urlencode function in the file to urlencode and then remove sort=True argument from the urlencode.
