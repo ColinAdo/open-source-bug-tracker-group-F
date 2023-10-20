@@ -8,7 +8,7 @@
 
 {% for repo in repository %}
 <div>
-    <a href="#">
+    <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
     <h3>{{repo.title}}</h3>
     <p>{{ repo.description | truncate_words(10) }}</p>
     </a>

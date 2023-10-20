@@ -1,6 +1,6 @@
 # Open Source Issue Tracking Application Group F
     
-## User Registration and Authentication: 
+## User Registration and Authentication: Done 
 Users should be able to create accounts, log in, and log out securely. User authentication is essential to ensure that only authorized individuals can access and modify the issue-tracking system.
 
 ## Issue Tracking and Management: 
@@ -35,20 +35,21 @@ Follow a testing plan to ensure the application's functionality, security, and p
 
 ## Conventions: 
 Please create a branch using your student name i.e Bsclmr00001
-Locate your flask_login/utils.py that is: /path/to/your/virtualenv/lib/python3.10/site-packages/flask_login/utils.py.
+Locate your flask_login/utils.py that is:
+/path/to/your/virtualenv/lib/python3.10/site-packages/flask_login/utils.py.
 
 Remove this imports: 
-from werkzeug.urls import url_decode
-from werkzeug.urls import endecode and the paste this code; 
+* **from werkzeug.urls import url_decode**
+* **from werkzeug.urls import endecode and the paste this code;**
 
-And add this imports 
-from werkzeug.datastructures import MultiDict
-from urllib.parse import urlencode
+**And add this imports** 
+* **from werkzeug.datastructures import MultiDict**
+* **from urllib.parse import urlencode**
 
-Rename the url_decode function in the file to MultiDict
-Rename urlencode function in the file to urlencode and then remove sort=True argument from the urlencode.
+**Rename the url_decode function in the file to MultiDict**
+**Rename urlencode function in the file to urlencode and then remove sort=True argument from the urlencode.**
 
-To Run the application
+**To Run the application**
 Run: 
-export FLASK_APP=groupf.py
-flask run --debug # For debug mode
+* **export FLASK_APP=groupf.py**
+* **flask run --debug # For debug mode**

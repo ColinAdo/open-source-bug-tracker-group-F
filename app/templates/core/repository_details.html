@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+<div>
+    <h1>{{repo.title}}</h1> <a href="">Create Issue</a>
+    <p>{{repo.description}}</p>
+</div>
+{% endblock content %}

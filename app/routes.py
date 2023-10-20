@@ -50,6 +50,7 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route('/create/repository/', methods=['GET', 'POST'])
+@login_required
 def create_repository():
     template = 'core/create_repository.html'
     form = RepositoryForm()
@@ -61,3 +62,9 @@ def create_repository():
         return redirect(url_for('index'))
 
     return render_template(template, form=form)
+
+@app.route('/repository/<int:repo_id>/details/')
+def repository_details(repo_id):
+    template = 'core/repository_details.html'
+    repo = Repository.query.get(repo_id)
+    return render_template(template, title="Rep Detail", repo=repo)
