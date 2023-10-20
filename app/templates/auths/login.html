@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% block title %} Sign-In {% endblock title %}
+{% block title %} {{title}} {% endblock title %}
 
 {% block content %}
     <h1>Sign In</h1>
@@ -22,4 +22,5 @@
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <p>{{ form.submit() }}</p>
     </form>
+    <p>New User? <a href="{{ url_for('register') }}">Register</a></p>
 {% endblock content %}

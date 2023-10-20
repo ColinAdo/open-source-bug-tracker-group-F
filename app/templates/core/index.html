@@ -1,6 +1,9 @@
 {% extends "core/base.html" %}
-{% block title %} Home {% endblock title %}
+{% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<h2>This is Group F for "Software Engineering"</h2>
+<h1>This is Group F for "Software Engineering"</h1>
+
+<h2>Hi, {{ current_user.username }}!</h2>
+
 {% endblock content %}

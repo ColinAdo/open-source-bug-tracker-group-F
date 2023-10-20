@@ -35,3 +35,6 @@ Follow a testing plan to ensure the application's functionality, security, and p
 
 ## Conventions: 
 Please create a branch using your student name i.e Bsclmr00001
+Locate your flask_login/utils.py that is: /path/to/your/virtualenv/lib/python3.10/site-packages/flask_login/utils.py.
+
+Remove this imports: from werkzeug.urls import url_decode and from werkzeug.urls import endecode and the paste this code; from werkzeug.datastructures import MultiDict
