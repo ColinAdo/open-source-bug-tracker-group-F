@@ -11,4 +11,12 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 
+def truncate_words(text, n):
+    words = text.split()
+    if len(words) > n:
+        return ' '.join(words[:n]) + '...'
+    return text
+
+app.jinja_env.filters['truncate_words'] = truncate_words
+
 from app import routes, models

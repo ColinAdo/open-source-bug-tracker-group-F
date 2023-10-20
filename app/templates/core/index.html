@@ -6,4 +6,13 @@
 
 <h2>Hi, {{ current_user.username }}!</h2>
 
+{% for repo in repository %}
+<div>
+    <a href="#">
+    <h3>{{repo.title}}</h3>
+    <p>{{ repo.description | truncate_words(10) }}</p>
+    </a>
+</div>
+{% endfor %}
+
 {% endblock content %}
