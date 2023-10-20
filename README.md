@@ -47,3 +47,8 @@ from urllib.parse import urlencode
 
 Rename the url_decode function in the file to MultiDict
 Rename urlencode function in the file to urlencode and then remove sort=True argument from the urlencode.
+
+To Run the application
+Run: 
+export FLASK_APP=groupf.py
+flask run --debug # For debug mode
