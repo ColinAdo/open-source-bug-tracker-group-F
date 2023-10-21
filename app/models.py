@@ -23,13 +23,7 @@ class User(UserMixin, db.Model):
     
 class Severity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    class TitleOptions(OptionEnum):
-        CRITICAL = "critical"
-        MAJOR = "major"
-        MINOR = "minor"
-
-    title = db.Column(Enum(TitleOptions), index=True) 
+    title = db.Column(db.String(50), index=True) 
 
     def __repr__(self):
         return '<Severity {}>'.format(self.title)
@@ -37,26 +31,14 @@ class Severity(db.Model):
 
 class Status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    class TitleOptions(OptionEnum):
-        CRITICAL = "open"
-        MAJOR = "in progress"
-        MINOR = "closed"
-
-    title = db.Column(Enum(TitleOptions), index=True)
+    title = db.Column(db.String(50), index=True) 
 
     def __repr__(self):
         return '<Status {}>'.format(self.title)
     
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    class TitleOptions(OptionEnum):
-        CRITICAL = "bug"
-        MAJOR = "feature"
-        MINOR = "enhancement"
-
-    title = db.Column(Enum(TitleOptions), index=True)
+    title = db.Column(db.String(50), index=True)
 
     def __repr__(self):
         return '<Category {}>'.format(self.title)

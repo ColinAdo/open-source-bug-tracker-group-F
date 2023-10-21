@@ -11,6 +11,8 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 
+app.app_context().push()
+
 def truncate_words(text, n):
     words = text.split()
     if len(words) > n:

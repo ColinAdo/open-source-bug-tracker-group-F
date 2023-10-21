@@ -1,10 +1,9 @@
-from flask import render_template, flash, redirect, url_for
-from flask_login import current_user, login_user, logout_user
-from flask_login import login_required
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import current_user, login_user, logout_user, login_required, current_user
 from flask import render_template
-from app.models import User, Repository
+from app.models import User, Repository, Issue
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm
+from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm
 from app import db
 
 @app.route('/')
@@ -68,3 +67,36 @@ def repository_details(repo_id):
     template = 'core/repository_details.html'
     repo = Repository.query.get(repo_id)
     return render_template(template, title="Rep Detail", repo=repo)
+
+@app.route('/<string:repository_id>/create_issue/', methods=['GET', 'POST'])
+def create_issue(repository_id):
+    template = 'core/create_issue.html'
+    with app.app_context():
+        form = IssueForm()
+        repository = Repository.query.get(repository_id)
+
+        if request.method == 'POST' and form.validate_on_submit():
+            title = form.title.data
+            description = form.description.data
+            created_by = current_user.id
+            severity = form.severity.data
+            status = form.status.data
+            category = form.category.data
+
+            issue = Issue(
+                title=title,
+                description=description,
+                severity=severity,
+                status=status,
+                created_by=created_by,
+                category=category,
+                repository_id=repository_id
+            )
+
+            db.session.add(issue)
+            db.session.commit()
+
+            flash('Issue created successfully')
+            return redirect(url_for('create_issue', repository_id=repository_id))
+
+    return render_template(template, repository=repository, form=form, title="Issue")

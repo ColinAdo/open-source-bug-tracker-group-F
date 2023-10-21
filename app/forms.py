@@ -1,7 +1,7 @@
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User
+from app.models import User, Severity, Status, Category
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -31,3 +31,14 @@ class RepositoryForm(FlaskForm):
     title = StringField('Repository Name', validators=[DataRequired()])
     description = TextAreaField('Description')
     submit = SubmitField('Create Repository')
+
+class IssueForm(FlaskForm):
+    title = StringField('Repository Name', validators=[DataRequired()])
+    description = TextAreaField('Description')
+    severity = SelectField('Severity', coerce=int, validators=[DataRequired()],
+                           choices=[(severity.id, severity.title) for severity in Severity.query.all()])
+    status = SelectField('Status', coerce=int, validators=[DataRequired()],
+                         choices=[(status.id, status.title) for status in Status.query.all()])
+    category = SelectField('Category', coerce=int, validators=[DataRequired()],
+                           choices=[(category.id, category.title) for category in Category.query.all()])
+    submit = SubmitField('Create Issue')
