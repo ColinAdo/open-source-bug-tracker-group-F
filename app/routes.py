@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required, c
 from flask import render_template
 from app.models import User, Repository, Issue, Status, Category, Severity, Comment
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm
+from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm
 from app import db
 
 @app.route('/')
@@ -128,4 +128,25 @@ def issues_detail(issue_id):
         flash('You Commented')
         return redirect(url_for('issues_detail', issue_id=issue_id))
 
-    return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)      
+    return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)  
+
+from flask import request
+
+@app.route('/edit/comment/<int:comment_id>/', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    template = 'core/edit_comment.html'
+    comment = Comment.query.get(comment_id)
+
+    form = EditCommentForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        new_text = form.text.data
+        comment.text = new_text
+        db.session.commit()
+
+        flash('Comment updated successfully')
+        return redirect(url_for('issues_detail', issue_id=comment.issue_id))  # Replace 'your_redirect_route' with the appropriate route
+
+    form.text.data = comment.text
+
+    return render_template(template, title="Edit Comment", form=form)

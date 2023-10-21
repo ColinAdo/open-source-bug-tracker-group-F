@@ -43,3 +43,7 @@ class IssueForm(FlaskForm):
 class CommentForm(FlaskForm):
     text = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Comment')
+
+class EditCommentForm(FlaskForm):
+    text = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Edit')
