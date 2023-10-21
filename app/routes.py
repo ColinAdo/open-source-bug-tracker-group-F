@@ -129,7 +129,8 @@ def create_issue(repository_id):
 def issues_list(repository_id):
     template = 'core/issues_list.html'
     issues = Issue.query.filter_by(repository_id=repository_id)
-    return render_template(template, title="Issues", issues=issues)
+    repository = Repository.query.get(repository_id)
+    return render_template(template, title="Issues", issues=issues, repository=repository)
 
 @app.route('/issues/<int:issue_id>/', methods=['GET', 'POST'])
 def issues_detail(issue_id):

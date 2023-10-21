@@ -4,7 +4,10 @@
 {% block content %}
 
 {% if issues.count() == 0 %}
-    <h3>No issue created for this repository </h3>
+
+    <h3>No issue created for this repository 
+        <a href="{{ url_for('create_issue', repository_id=repository.id ) }}">New Issue</a>
+    </h3>
     {% else %}
 
     {% if issues.count() == 1 %}
