@@ -3,8 +3,10 @@
 
 {% block content %}
 <div>
-    <h1>{{repo.title}}</h1> <a href="{{ url_for('issues_list', repository_id=repo.title )}}">Issue</a>
-    <p>{{repo.description}}</p>
-    <p>{{repo.created_at}}</p>
+    <h1>{{repo.title}} <span>{{repo.created_at}}</span></h1> 
+    <p>{{repo.description}} <a href="{{ url_for('edit_repository', repository_id=repo.id )}}">Edit</a></p>
+    <p><a href="">file here...</a></p>
+    <p><a href="">file here...</a></p>
+    <p><a href="">file here...</a></p>
 </div>
 {% endblock content %}

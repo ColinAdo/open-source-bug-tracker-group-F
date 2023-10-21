@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required, c
 from flask import render_template
 from app.models import User, Repository, Issue, Status, Category, Severity, Comment
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm
+from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm, EditRepositoryForm
 from app import db
 
 @app.route('/')
@@ -67,6 +67,25 @@ def repository_details(repo_id):
     template = 'core/repository_details.html'
     repo = Repository.query.get(repo_id)
     return render_template(template, title="Rep Detail", repo=repo)
+
+@app.route('/edit/repository/<int:repository_id>/', methods=['GET', 'POST'])
+def edit_repository(repository_id):
+    template = 'core/edit_repository.html'
+    repository = Repository.query.get(repository_id)
+
+    form = EditRepositoryForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        new_description = form.description.data
+        repository.description = new_description
+        db.session.commit()
+
+        flash('Comment updated successfully')
+        return redirect(url_for('repository_details', repo_id=repository.id))  
+    
+    form.description.data = repository.description
+
+    return render_template(template, title="Edit Repository", form=form)
 
 @app.route('/<string:repository_id>/create_issue/', methods=['GET', 'POST'])
 def create_issue(repository_id):

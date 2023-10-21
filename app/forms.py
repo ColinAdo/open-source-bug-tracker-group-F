@@ -32,6 +32,10 @@ class RepositoryForm(FlaskForm):
     description = TextAreaField('Description')
     submit = SubmitField('Create Repository')
 
+class EditRepositoryForm(FlaskForm):
+    description = TextAreaField('Description')
+    submit = SubmitField('Edit Repository')
+
 class IssueForm(FlaskForm):
     title = StringField('Repository Name', validators=[DataRequired()])
     description = TextAreaField('Description')
