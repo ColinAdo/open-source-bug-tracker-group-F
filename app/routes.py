@@ -111,3 +111,8 @@ def issues_list(repository_id):
     issues = Issue.query.filter_by(repository_id=repository_id)
     return render_template(template, title="Issues", issues=issues)
 
+@app.route('/issues/<issue_id>/')
+def issues_detail(issue_id):
+    issue = Issue.query.get(issue_id)
+    template = 'core/issues_detail.html'
+    return render_template(template, title="Issues Detail", issue=issue)      

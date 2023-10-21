@@ -5,7 +5,7 @@
 <h2>Issues {{ issues.count() }}</h2>
 
 {% for issue in issues %}
-    <a href="{{ url_for('issue_details', issue_id=issue.id ) }}"><p>Title: {{ issue.title }} <small>user img</small> </p></a>
+    <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}"><p>Title: {{ issue.title }} <small>user img</small> </p></a>
 
 {% endfor %}
 
