@@ -35,10 +35,7 @@ class RepositoryForm(FlaskForm):
 class IssueForm(FlaskForm):
     title = StringField('Repository Name', validators=[DataRequired()])
     description = TextAreaField('Description')
-    severity = SelectField('Severity', coerce=int, validators=[DataRequired()],
-                           choices=[(severity.id, severity.title) for severity in Severity.query.all()])
-    status = SelectField('Status', coerce=int, validators=[DataRequired()],
-                         choices=[(status.id, status.title) for status in Status.query.all()])
-    category = SelectField('Category', coerce=int, validators=[DataRequired()],
-                           choices=[(category.id, category.title) for category in Category.query.all()])
+    severity = SelectField('Severity', coerce=int, validators=[DataRequired()])
+    status = SelectField('Status', coerce=int, validators=[DataRequired()])
+    category = SelectField('Category', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Create Issue')

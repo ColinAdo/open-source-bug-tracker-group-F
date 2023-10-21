@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required, current_user
 from flask import render_template
-from app.models import User, Repository, Issue
+from app.models import User, Repository, Issue, Status, Category, Severity
 from app import app
 from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm
 from app import db
@@ -71,32 +71,43 @@ def repository_details(repo_id):
 @app.route('/<string:repository_id>/create_issue/', methods=['GET', 'POST'])
 def create_issue(repository_id):
     template = 'core/create_issue.html'
-    with app.app_context():
-        form = IssueForm()
-        repository = Repository.query.get(repository_id)
+    repository = Repository.query.get(repository_id)
+    form = IssueForm()  
 
-        if request.method == 'POST' and form.validate_on_submit():
-            title = form.title.data
-            description = form.description.data
-            created_by = current_user.id
-            severity = form.severity.data
-            status = form.status.data
-            category = form.category.data
+    # Populate form choices for Severity, Status, and Category
+    form.severity.choices = [(severity.id, severity.title) for severity in Severity.query.all()]
+    form.status.choices = [(status.id, status.title) for status in Status.query.all()]
+    form.category.choices = [(category.id, category.title) for category in Category.query.all()]
 
-            issue = Issue(
-                title=title,
-                description=description,
-                severity=severity,
-                status=status,
-                created_by=created_by,
-                category=category,
-                repository_id=repository_id
-            )
+    if request.method == 'POST' and form.validate_on_submit():
+        title = form.title.data
+        description = form.description.data
+        created_by = current_user.id
+        severity = form.severity.data
+        status = form.status.data
+        category = form.category.data
 
-            db.session.add(issue)
-            db.session.commit()
+        issue = Issue(
+            title=title,
+            description=description,
+            severity=severity,
+            status=status,
+            created_by=created_by,
+            category=category,
+            repository_id=repository_id
+        )
 
-            flash('Issue created successfully')
-            return redirect(url_for('create_issue', repository_id=repository_id))
+        db.session.add(issue)
+        db.session.commit()
+
+        flash('Issue created successfully')
+        return redirect(url_for('create_issue', repository_id=repository_id))
 
     return render_template(template, repository=repository, form=form, title="Issue")
+
+@app.route('/<string:repository_id>/issues/')
+def issues_list(repository_id):
+    template = 'core/issues_list.html'
+    issues = Issue.query.filter_by(repository_id=repository_id)
+    return render_template(template, title="Issues", issues=issues)
+

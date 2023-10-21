@@ -3,7 +3,7 @@
 
 {% block content %}
 <div>
-    <h1>{{repo.title}}</h1> <a href="{{ url_for('create_issue', repository_id=repo.title )}}">Create Issue</a>
+    <h1>{{repo.title}}</h1> <a href="{{ url_for('issues_list', repository_id=repo.title )}}">Issue</a>
     <p>{{repo.description}}</p>
     <p>{{repo.created_at}}</p>
 </div>
