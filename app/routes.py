@@ -66,7 +66,8 @@ def create_repository():
 def repository_details(repo_id):
     template = 'core/repository_details.html'
     repo = Repository.query.get(repo_id)
-    return render_template(template, title="Rep Detail", repo=repo)
+    issues = Issue.query.filter_by(repository_id=repo_id)
+    return render_template(template, title="Rep Detail", repo=repo, issues=issues)
 
 @app.route('/edit/repository/<int:repository_id>/', methods=['GET', 'POST'])
 def edit_repository(repository_id):

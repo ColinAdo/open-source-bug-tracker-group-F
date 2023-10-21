@@ -3,7 +3,15 @@
 
 {% block content %}
 <div>
-    <h1>{{repo.title}} <span>{{repo.created_at}}</span></h1> 
+    <h1>{{repo.title}} <span>{{repo.created_at}}</span> 
+        <a href="{{ url_for('issues_list', repository_id=repo.id) }}">
+        {% if issues.count() == 0 or issues.count() == 1 %}
+            Issue ({{issues.count()}})
+        {% else %}
+            Issues ({{issues.count()}})
+        {% endif %}
+        </a>
+    </h1> 
     <p>{{repo.description}} <a href="{{ url_for('edit_repository', repository_id=repo.id )}}">Edit</a></p>
     <p><a href="">file here...</a></p>
     <p><a href="">file here...</a></p>

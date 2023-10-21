@@ -2,12 +2,22 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<h2>Issues {{ issues.count() }}</h2>
 
-{% for issue in issues %}
-    <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}"><p>Title: {{ issue.title }} <small>user img</small> </p></a>
+{% if issues.count() == 0 %}
+    <h3>No issue created for this repository </h3>
+    {% else %}
 
-{% endfor %}
+    {% if issues.count() == 1 %}
+        <h2>Issue {{ issues.count() }}</h2>
+    {% else %}
+        <h2>Issues {{ issues.count() }}</h2>
+    {% endif %}
 
+    {% for issue in issues %}
+        <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}"><p>Title: {{ issue.title }} <small>user img</small> </p></a>
+
+    {% endfor %}
+
+{% endif %}
 
 {% endblock content %}
