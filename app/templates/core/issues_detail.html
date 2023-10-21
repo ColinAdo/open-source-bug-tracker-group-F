@@ -9,4 +9,22 @@
 <p>{{issue.severity.title}}</p>
 <p>{{issue.category.username}}</p>
 
+{% for comment in comments %}
+<P>{{comment.user_id}} {{comment.text}} {{comment.created_at}}</P>
+{% endfor %} 
+
+<h1>Add comment</h1>
+<form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text() }}<br>
+            {% for error in form.text.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </p>
+        
+        <p>{{ form.submit() }}</p>
+    </form>
+
 {% endblock content %}                

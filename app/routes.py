@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required, current_user
 from flask import render_template
-from app.models import User, Repository, Issue, Status, Category, Severity
+from app.models import User, Repository, Issue, Status, Category, Severity, Comment
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm
+from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm
 from app import db
 
 @app.route('/')
@@ -111,8 +111,21 @@ def issues_list(repository_id):
     issues = Issue.query.filter_by(repository_id=repository_id)
     return render_template(template, title="Issues", issues=issues)
 
-@app.route('/issues/<issue_id>/')
+@app.route('/issues/<int:issue_id>/', methods=['GET', 'POST'])
 def issues_detail(issue_id):
-    issue = Issue.query.get(issue_id)
     template = 'core/issues_detail.html'
-    return render_template(template, title="Issues Detail", issue=issue)      
+    issue = Issue.query.get(issue_id)
+    comments = Comment.query.filter_by(issue_id=issue_id)
+
+    form = CommentForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        text = form.text.data
+
+        comment = Comment(issue_id=issue_id, user_id=current_user.id, text=text)
+        db.session.add(comment)
+        db.session.commit()
+
+        flash('You Commented')
+        return redirect(url_for('issues_detail', issue_id=issue_id))
+
+    return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)      

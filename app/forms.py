@@ -39,3 +39,7 @@ class IssueForm(FlaskForm):
     status = SelectField('Status', coerce=int, validators=[DataRequired()])
     category = SelectField('Category', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Create Issue')
+
+class CommentForm(FlaskForm):
+    text = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Comment')
