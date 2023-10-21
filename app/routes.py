@@ -130,8 +130,6 @@ def issues_detail(issue_id):
 
     return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)  
 
-from flask import request
-
 @app.route('/edit/comment/<int:comment_id>/', methods=['GET', 'POST'])
 def edit_comment(comment_id):
     template = 'core/edit_comment.html'
@@ -145,8 +143,21 @@ def edit_comment(comment_id):
         db.session.commit()
 
         flash('Comment updated successfully')
-        return redirect(url_for('issues_detail', issue_id=comment.issue_id))  # Replace 'your_redirect_route' with the appropriate route
-
+        return redirect(url_for('issues_detail', issue_id=comment.issue_id))  
+    
     form.text.data = comment.text
 
     return render_template(template, title="Edit Comment", form=form)
+
+@app.route('/delete/comment/<int:comment_id>/', methods=['GET', 'POST'])
+def delete_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if comment:
+        db.session.delete(comment)
+        db.session.commit()
+        flash('Comment deleted successfully')
+    else:
+        flash('Comment not found')
+
+    return redirect(url_for('issues_detail', issue_id=comment.issue_id))  
