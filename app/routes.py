@@ -62,6 +62,7 @@ def create_repository():
 
     return render_template(template, form=form)
 
+@login_required
 @app.route('/repository/<int:repo_id>/details/')
 def repository_details(repo_id):
     template = 'core/repository_details.html'
@@ -69,6 +70,7 @@ def repository_details(repo_id):
     issues = Issue.query.filter_by(repository_id=repo_id)
     return render_template(template, title="Rep Detail", repo=repo, issues=issues)
 
+@login_required
 @app.route('/edit/repository/<int:repository_id>/', methods=['GET', 'POST'])
 def edit_repository(repository_id):
     template = 'core/edit_repository.html'
@@ -88,6 +90,7 @@ def edit_repository(repository_id):
 
     return render_template(template, title="Edit Repository", form=form)
 
+@login_required
 @app.route('/<string:repository_id>/create_issue/', methods=['GET', 'POST'])
 def create_issue(repository_id):
     template = 'core/create_issue.html'
@@ -125,6 +128,7 @@ def create_issue(repository_id):
 
     return render_template(template, repository=repository, form=form, title="Issue")
 
+@login_required
 @app.route('/<string:repository_id>/issues/')
 def issues_list(repository_id):
     template = 'core/issues_list.html'
@@ -132,6 +136,7 @@ def issues_list(repository_id):
     repository = Repository.query.get(repository_id)
     return render_template(template, title="Issues", issues=issues, repository=repository)
 
+@login_required
 @app.route('/issues/<int:issue_id>/', methods=['GET', 'POST'])
 def issues_detail(issue_id):
     template = 'core/issues_detail.html'
@@ -151,6 +156,7 @@ def issues_detail(issue_id):
 
     return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)  
 
+@login_required
 @app.route('/edit/comment/<int:comment_id>/', methods=['GET', 'POST'])
 def edit_comment(comment_id):
     template = 'core/edit_comment.html'
@@ -170,6 +176,7 @@ def edit_comment(comment_id):
 
     return render_template(template, title="Edit Comment", form=form)
 
+@login_required
 @app.route('/delete/comment/<int:comment_id>/', methods=['GET', 'POST'])
 def delete_comment(comment_id):
     comment = Comment.query.get(comment_id)
