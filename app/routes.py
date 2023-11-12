@@ -1,3 +1,6 @@
+from flask import render_template, request
+from app.models import Repository, Issue, User
+from app import app, db
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required, current_user
 from flask import render_template
@@ -188,4 +191,25 @@ def delete_comment(comment_id):
     else:
         flash('Comment not found')
 
-    return redirect(url_for('issues_detail', issue_id=comment.issue_id))  
+    return redirect(url_for('issues_detail', issue_id=comment.issue_id))
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    template = 'core/search_results.html'
+    if request.method == 'POST':
+        query = request.form.get('query')
+
+        repositories = Repository.query.filter(
+            Repository.title.ilike(f"%{query}%")).all()
+        issues = Issue.query.filter(Issue.title.ilike(
+            f"%{query}%") | Issue.description.ilike(f"%{query}%")).all()
+        users = User.query.filter(User.username.ilike(
+            f"%{query}%") | User.email.ilike(f"%{query}%")).all()
+        
+        return render_template(
+            template, query=query, 
+            repositories=repositories, 
+            issues=issues,
+            users=users,
+            )
+    return render_template(template, title='Search')
