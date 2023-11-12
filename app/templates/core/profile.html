@@ -10,7 +10,7 @@
         <tr valign="top">
             <td><img src="{{ user.avatar(128) }}"></td> 
             <td>
-                <h1>User: {{ user.username }}</h1>
+                <h1>{{ user.username }}</h1>
 
                 {% if user.about_me %}
                     <p>{{ user.about_me }}</p>
@@ -22,12 +22,20 @@
         </tr>
     </table>
     <hr>
-    {% for post in posts %}
+    {% for repo in repos %}
     <table>
         <tr valign="top">
-            <td><img src="{{ post.author.avatar(36) }}"></td>
-            <td>{{ post.repo }}</td>
-        </tr>
+            <td>
+                <a href="{{ url_for('profile', username=repo.user.username)}}">
+                    <img src="{{ repo.user.avatar(36) }}">
+                </a>
+            </td> 
+            </td>
+                <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
+                    {{ repo.title }}
+                </a>
+            </td>
+        </tr> <br>
     </table>
     {% endfor %}
 {% endblock content %}

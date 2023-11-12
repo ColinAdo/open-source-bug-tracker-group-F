@@ -13,7 +13,7 @@ from app import db
 @login_required
 def index():
     template = 'core/index.html'
-    repository = Repository.query.all()
+    repository = Repository.query.filter_by(user=current_user)
     return render_template(template, title='Home Page', repository=repository)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -57,7 +57,7 @@ def create_repository():
     template = 'core/create_repository.html'
     form = RepositoryForm()
     if form.validate_on_submit():
-        new_repository = Repository(title=form.title.data, description=form.description.data)
+        new_repository = Repository(title=form.title.data, user=current_user, description=form.description.data)
         db.session.add(new_repository)
         db.session.commit()
         flash('Repository created successfully', 'success')
@@ -219,11 +219,9 @@ def search():
 def profile(username):
     template = 'core/profile.html'
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'repo': 'Test Repository #1'},
-        {'author': user, 'repo': 'Test Repository #2'}
-    ]
-    return render_template(template, user=user, posts=posts, title="Profile")
+    repos = Repository.query.filter(Repository.user.has(username=username)).all()
+
+    return render_template(template, user=user, repos=repos, title="Profile")
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
