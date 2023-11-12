@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required, c
 from flask import render_template
 from app.models import User, Repository, Issue, Status, Category, Severity, Comment
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm, EditRepositoryForm
+from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm, EditRepositoryForm, SettingsFrom
 from app import db
 
 @app.route('/')
@@ -213,3 +213,33 @@ def search():
             users=users,
             )
     return render_template(template, title='Search')
+
+@app.route('/user/<username>/')
+@login_required
+def profile(username):
+    template = 'core/profile.html'
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author': user, 'repo': 'Test Repository #1'},
+        {'author': user, 'repo': 'Test Repository #2'}
+    ]
+    return render_template(template, user=user, posts=posts, title="Profile")
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    template = 'core/settings.html'
+    form = SettingsFrom()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        current_user.location = form.location.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+        form.location.data = current_user.location
+    return render_template(template, title='Settings',form=form)

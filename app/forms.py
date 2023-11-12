@@ -1,4 +1,4 @@
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User, Severity, Status, Category
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
@@ -51,3 +51,10 @@ class CommentForm(FlaskForm):
 class EditCommentForm(FlaskForm):
     text = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Edit')
+
+
+class SettingsFrom(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    location = StringField('Location', validators=[Length(min=0, max=20)])
+    submit = SubmitField('Submit')
