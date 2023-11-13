@@ -100,7 +100,6 @@ def create_issue(repository_id):
     repository = Repository.query.get(repository_id)
     form = IssueForm()  
 
-    # Populate form choices for Severity, Status, and Category
     form.severity.choices = [(severity.id, severity.title) for severity in Severity.query.all()]
     form.status.choices = [(status.id, status.title) for status in Status.query.all()]
     form.category.choices = [(category.id, category.title) for category in Category.query.all()]
@@ -108,10 +107,14 @@ def create_issue(repository_id):
     if request.method == 'POST' and form.validate_on_submit():
         title = form.title.data
         description = form.description.data
-        created_by = current_user.id
-        severity = form.severity.data
-        status = form.status.data
-        category = form.category.data
+        created_by = current_user
+        severity_id = form.severity.data
+        status_id = form.status.data
+        category_id = form.category.data
+
+        severity = Severity.query.get(severity_id)
+        status = Status.query.get(status_id)
+        category = Category.query.get(category_id)
 
         issue = Issue(
             title=title,
@@ -220,8 +223,9 @@ def profile(username):
     template = 'core/profile.html'
     user = User.query.filter_by(username=username).first_or_404()
     repos = Repository.query.filter(Repository.user.has(username=username)).all()
+    count = len(repos)
 
-    return render_template(template, user=user, repos=repos, title="Profile")
+    return render_template(template, user=user, repos=repos, title="Profile", count=count)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])

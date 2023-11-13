@@ -3,13 +3,13 @@
 
 {% block content %}
 <h2>Issues #{{issue.id}} <span>{{ issue.status.title }}</span>
+    <p> <span>{{ issue.status.title }}</span> <span>{{ issue.category.title }}</span> <span>{{ issue.severity.title }}</span></p>
+        
 <a href="{{ url_for('create_issue', repository_id=issue.repository_id )}}">New Issue</a>
 </h2>
 <p>{{issue.created_at}}</p>
 <p>{{issue.description}}</p>
-<p>{{issue.created_by.username}}</p>
-<p>{{issue.severity.title}}</p>
-<p>{{issue.category.username}}</p>
+
 
 <h2>Comments ({{comments.count()}})</h2>
 

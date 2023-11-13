@@ -37,7 +37,7 @@ class EditRepositoryForm(FlaskForm):
     submit = SubmitField('Edit Repository')
 
 class IssueForm(FlaskForm):
-    title = StringField('Repository Name', validators=[DataRequired()])
+    title = StringField('Issue title', validators=[DataRequired()])
     description = TextAreaField('Description')
     severity = SelectField('Severity', coerce=int, validators=[DataRequired()])
     status = SelectField('Status', coerce=int, validators=[DataRequired()])

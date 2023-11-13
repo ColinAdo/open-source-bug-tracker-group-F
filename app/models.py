@@ -64,18 +64,33 @@ class Repository(db.Model):
     def __repr__(self):
         return '<Repository {}>'.format(self.title)
 
-    
+
 class Issue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), index=True)
     description = db.Column(db.String(500), index=True)
-    severity = db.Column(db.Integer, db.ForeignKey('severity.id', name='issue_severity_fk'), nullable=False)
-    status = db.Column(db.Integer, db.ForeignKey('status.id', name='issue_status_fk'), nullable=False)
-    created_by = db.Column(db.Integer, db.ForeignKey('user.id', name='issue_user_fk'), nullable=False)
-    category = db.Column(db.Integer, db.ForeignKey('category.id', name='issue_category_fk'), nullable=False)
+
+    status_id = db.Column(db.Integer, db.ForeignKey(
+        'status.id', name='issue_status_fk'), nullable=False)
+    status = db.relationship('Status', backref='issues')
+
+    severity_id = db.Column(db.Integer, db.ForeignKey(
+        'severity.id', name='issue_severity_fk'), nullable=False)
+    severity = db.relationship('Severity', backref='issues')
+
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'category.id', name='issue_category_fk'), nullable=False)
+    category = db.relationship('Category', backref='issues') 
+
+    created_by_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id', name='issue_user_fk'), nullable=False)
+    created_by = db.relationship(
+        'User', backref='created_issues', foreign_keys=[created_by_id])
+
     created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-    repository_id = db.Column(db.Integer, db.ForeignKey('repository.id', name='issue_repository_fk'), nullable=False)
+    repository_id = db.Column(db.Integer, db.ForeignKey(
+        'repository.id', name='issue_repository_fk'), nullable=False)
 
     def __repr__(self):
         return '<Issue {}>'.format(self.title)

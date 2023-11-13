@@ -11,13 +11,19 @@
     {% else %}
 
     {% if issues.count() == 1 %}
-        <h2>Issue {{ issues.count() }}</h2>
+        <h2>Issue #{{ issues.count() }}</h2>
     {% else %}
         <h2>Issues {{ issues.count() }}</h2>
     {% endif %}
 
     {% for issue in issues %}
-        <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}"><p>Title: {{ issue.title }} <small>user img</small> </p></a>
+        <p> <span>{{ issue.status.title }}</span> <span>{{ issue.category.title }}</span> <span>{{ issue.severity.title }}</span></p>
+        <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}">
+            <p>Title: {{ issue.title }} </p>
+        </a>
+        <a href="{{ url_for('profile', username=issue.created_by.username)}}">
+            <img src="{{ issue.created_by.avatar(36) }}">
+        </a>
 
     {% endfor %}
 

@@ -4,15 +4,25 @@
 {% block content %}
 <h1>This is Group F for "Software Engineering"</h1>
 
-<h2>Hi, {{ current_user.username }}!</h2>
+<h2>Hi, {{ current_user.username }}!</h2> 
+
+<br>
 
 {% for repo in repository %}
-<div>
-    <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
-    <h3>{{repo.title}}</h3>
-    <p>{{ repo.description | truncate_words(10) }}</p>
-    </a>
-</div>
-{% endfor %}
+    <table>
+        <tr valign="top">
+            <td>
+                <a href="{{ url_for('profile', username=repo.user.username)}}">
+                    <img src="{{ repo.user.avatar(36) }}">
+                </a>
+            </td> 
+            </td>
+                <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
+                    {{ repo.title }}
+                </a>
+            </td>
+        </tr> <br>
+    </table>
+    {% endfor %}
 
 {% endblock content %}
