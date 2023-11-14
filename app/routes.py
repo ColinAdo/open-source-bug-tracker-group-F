@@ -1,18 +1,14 @@
-from flask import render_template, request
+from flask import render_template, flash, redirect, url_for, request
 from app.models import Repository, Issue, User
 from app import app, db
-from flask import render_template, flash, redirect, url_for, request
-from flask_login import current_user, login_user, logout_user, login_required, current_user
-from flask import render_template
+from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Repository, Issue, Status, Category, Severity, Comment
-from app import app
 from app.forms import (
     LoginForm, RegistrationForm, 
     RepositoryForm, IssueForm, 
     CommentForm, EditCommentForm, 
     EditRepositoryForm, SettingsFrom,
     EditIssueStatusForm, EditIssueForm)
-from app import db
 
 @app.route('/')
 @login_required
