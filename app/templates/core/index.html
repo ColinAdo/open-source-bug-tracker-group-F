@@ -23,7 +23,9 @@
     Hi, {{ current_user.username }}!
 </h5> 
 
-<br>
+<div class="container">
+{% if repository.count() > 0 %}
+<small class="text-center d-flex justify-content-center fw-bolder">All your repositories</small>
 
 {% for repo in repository %}
     <table class="d-flex justify-content-center">
@@ -40,6 +42,10 @@
             
         </tr> <br>
     </table>
-    {% endfor %}
+{% endfor %}
+{% else %}
+<small class="text-center d-flex justify-content-center fw-bolder">Navigate throught the app to create, update, delete issues, comments, repositories as well as searching users, repositories, issues etc</small>
+{% endif %}
+</div>
 
 {% endblock content %}
