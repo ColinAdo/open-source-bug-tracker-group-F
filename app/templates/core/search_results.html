@@ -12,7 +12,6 @@
       {% for repo in repositories %}
       <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
         <h3>{{repo.title}}</h3>
-        <p>{{ repo.description }}</p>
       </a>
       {% endfor %}
     </ul>
@@ -36,8 +35,8 @@
     <ul>
       {% for user in users %}
         <a href="{{ url_for('profile', username=user.username) }}">
-            <li>{{ user.username }}</li>
-        </a>
+            <img src="{{ user.avatar(36) }}"> {{ user.username }}
+        </a> <br>
       {% endfor %}
     </ul>
     {% endif %}
