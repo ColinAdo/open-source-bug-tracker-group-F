@@ -20,16 +20,16 @@
 
 <h1>Add comment</h1>
 <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.text.label }}<br>
-            {{ form.text() }}<br>
-            {% for error in form.text.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        
-        <p>{{ form.submit() }}</p>
-    </form>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.text.label }}<br>
+        {{ form.text() }}<br>
+        {% for error in form.text.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
 
-{% endblock content %}                
+<a href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Close Issue</a>
+{% endblock content %}

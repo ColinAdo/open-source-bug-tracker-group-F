@@ -99,6 +99,8 @@ class Issue(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     issue_id = db.Column(db.Integer, db.ForeignKey('issue.id'), nullable=False)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='comment_repository_fk'))
+    # user = db.relationship('User', backref='repositories')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     text = db.Column(db.String(500), index=True)
     created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)

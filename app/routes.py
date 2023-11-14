@@ -6,7 +6,12 @@ from flask_login import current_user, login_user, logout_user, login_required, c
 from flask import render_template
 from app.models import User, Repository, Issue, Status, Category, Severity, Comment
 from app import app
-from app.forms import LoginForm, RegistrationForm, RepositoryForm, IssueForm, CommentForm, EditCommentForm, EditRepositoryForm, SettingsFrom
+from app.forms import (
+    LoginForm, RegistrationForm, 
+    RepositoryForm, IssueForm, 
+    CommentForm, EditCommentForm, 
+    EditRepositoryForm, SettingsFrom,
+    EditIssueStatusForm)
 from app import db
 
 @app.route('/')
@@ -162,6 +167,27 @@ def issues_detail(issue_id):
 
     return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)  
 
+@app.route('/edit_issue_status/<int:issue_id>/', methods=['POST', 'GET'])
+@login_required
+def edit_issue_status(issue_id):
+    issue = Issue.query.get_or_404(issue_id)
+    form = EditIssueStatusForm()
+
+    form.status.choices = [(status.id, status.title) for status in Status.query.all()]
+    form.status.default = issue.status.id
+
+    if form.validate_on_submit():
+        status_id = form.status.data
+        status = Status.query.get(status_id)
+
+        issue.status_id = status_id  
+        db.session.commit()
+
+        flash('Issue status updated', 'success')
+        return redirect(url_for('issues_detail', issue_id=issue.id))
+
+    return render_template('core/edit_status.html', title='Edit Issue Status', form=form, issue=issue)
+
 @login_required
 @app.route('/edit/comment/<int:comment_id>/', methods=['GET', 'POST'])
 def edit_comment(comment_id):
@@ -226,7 +252,6 @@ def profile(username):
     count = len(repos)
 
     return render_template(template, user=user, repos=repos, title="Profile", count=count)
-
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required

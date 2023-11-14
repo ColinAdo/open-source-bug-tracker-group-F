@@ -58,3 +58,7 @@ class SettingsFrom(FlaskForm):
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     location = StringField('Location', validators=[Length(min=0, max=20)])
     submit = SubmitField('Submit')
+
+class EditIssueStatusForm(FlaskForm):
+    status = SelectField('Status', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Submit')
