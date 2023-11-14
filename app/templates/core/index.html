@@ -2,25 +2,42 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<h1>This is Group F for "Software Engineering"</h1>
+<div class="container mt-4">
+    <h4 class="fw-bolder text-uppercase text-center">
+        This is Group F for "Software Engineering"
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check-fill" viewBox="0 0 16 16">
+            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+        </svg>
+        <span class="d-sm-none d-md-inline">2023</span>
+    </h4>
+  </div>
 
-<h2>Hi, {{ current_user.username }}!</h2> 
+  <div class="container mt-4">
+    <p class="text-center">
+        This is an open source Issue Tracking web application that allows developers to track and create, edit, and delete repository, issue and comments in their open source projects
+    </p>
+
+  </div>
+
+<h5 class="text-uppercase d-flex justify-content-center mt-5">
+    Hi, {{ current_user.username }}!
+</h5> 
 
 <br>
 
 {% for repo in repository %}
-    <table>
-        <tr valign="top">
+    <table class="d-flex justify-content-center">
+        <tr>
             <td>
-                <a href="{{ url_for('profile', username=repo.user.username)}}">
-                    <img src="{{ repo.user.avatar(36) }}">
+                <a href="{{ url_for('profile', username=repo.user.username)}}" style="text-decoration: none;">
+                    <img src="{{ repo.user.avatar(36) }}" class="rounded-circle">
+                </a>
+                <a class="icon-link icon-link-hover" href="{{ url_for('repository_details',  repo_id=repo.id) }}" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;">
+                    {{ repo.title }}
+                    
                 </a>
             </td> 
-            </td>
-                <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
-                    {{ repo.title }}
-                </a>
-            </td>
+            
         </tr> <br>
     </table>
     {% endfor %}
