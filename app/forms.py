@@ -1,13 +1,16 @@
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from app.models import User, Severity, Status, Category
+from app.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, SelectField
+from wtforms import (
+    StringField, PasswordField, 
+    BooleanField, SubmitField, 
+    TextAreaField,SelectField )
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Sign-In')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -15,7 +18,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    submit = SubmitField('Sign-Up')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -50,8 +53,7 @@ class CommentForm(FlaskForm):
 
 class EditCommentForm(FlaskForm):
     text = TextAreaField('Comment', validators=[DataRequired()])
-    submit = SubmitField('Edit')
-
+    submit = SubmitField('Edit Comment')
 
 class SettingsFrom(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -62,7 +64,6 @@ class SettingsFrom(FlaskForm):
 class EditIssueStatusForm(FlaskForm):
     status = SelectField('Status', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit')
-
 
 class EditIssueForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
