@@ -2,10 +2,13 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<h2>Issues #{{issue.id}} <span>{{ issue.status.title }}</span>
+<h2>{{issue.title}} #{{issue.id}} <span>{{ issue.status.title }}</span>
     <p> <span>{{ issue.status.title }}</span> <span>{{ issue.category.title }}</span> <span>{{ issue.severity.title }}</span></p>
         
 <a href="{{ url_for('create_issue', repository_id=issue.repository_id )}}">New Issue</a>
+{% if current_user.username == issue.created_by.username %}
+<a href="{{ url_for('edit_issue', issue_id=issue.id )}}">Edit</a> 
+{% endif %}
 </h2>
 <p>{{issue.created_at}}</p>
 <p>{{issue.description}}</p>
@@ -14,8 +17,13 @@
 <h2>Comments ({{comments.count()}})</h2>
 
 {% for comment in comments %}
-<P><a href="{{ url_for('profile', username=comment.user.username) }}"><img src="{{comment.user.avatar(38)}}" alt="img"></a> {{comment.text}} {{comment.created_at}}
-     <a href="{{ url_for('edit_comment', comment_id=comment.id) }}">Edit</a> <a href="{{ url_for('delete_comment', comment_id=comment.id) }}">Delete</a></P>
+<P>
+    <a href="{{ url_for('profile', username=comment.user.username) }}"><img src="{{comment.user.avatar(38)}}" alt="img"></a> {{comment.text}} {{comment.created_at}}
+    {% if current_user.username == comment.user.username %}
+    <a href="{{ url_for('edit_comment', comment_id=comment.id) }}">Edit</a> 
+    <a href="{{ url_for('delete_comment', comment_id=comment.id) }}">Delete</a>
+    {% endif %}
+</P>
 {% endfor %} 
 
 <h1>Add comment</h1>

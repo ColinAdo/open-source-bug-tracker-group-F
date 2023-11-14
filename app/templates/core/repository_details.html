@@ -12,7 +12,12 @@
         {% endif %}
         </a>
     </h1> 
-    <p>{{repo.description}} <a href="{{ url_for('edit_repository', repository_id=repo.id )}}">Edit</a></p>
+    <p>
+        {{repo.description}} 
+        {% if current_user.username == repo.user.username %}
+        <a href="{{ url_for('edit_repository', repository_id=repo.id )}}">Edit</a>
+        {% endif %}
+    </p>
     <p><a href="">file here...</a></p>
     <p><a href="">file here...</a></p>
     <p><a href="">file here...</a></p>

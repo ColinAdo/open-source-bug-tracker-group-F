@@ -11,7 +11,7 @@ from app.forms import (
     RepositoryForm, IssueForm, 
     CommentForm, EditCommentForm, 
     EditRepositoryForm, SettingsFrom,
-    EditIssueStatusForm)
+    EditIssueStatusForm, EditIssueForm)
 from app import db
 
 @app.route('/')
@@ -135,7 +135,7 @@ def create_issue(repository_id):
         db.session.commit()
 
         flash('Issue created successfully')
-        return redirect(url_for('create_issue', repository_id=repository_id))
+        return redirect(url_for('issues_list', repository_id=repository_id))
 
     return render_template(template, repository=repository, form=form, title="Issue")
 
@@ -143,7 +143,7 @@ def create_issue(repository_id):
 @app.route('/<string:repository_id>/issues/')
 def issues_list(repository_id):
     template = 'core/issues_list.html'
-    issues = Issue.query.filter_by(repository_id=repository_id)
+    issues = Issue.query.filter_by(repository_id=repository_id).order_by(Issue.created_at.desc())
     repository = Repository.query.get(repository_id)
     return render_template(template, title="Issues", issues=issues, repository=repository)
 
@@ -166,6 +166,29 @@ def issues_detail(issue_id):
         return redirect(url_for('issues_detail', issue_id=issue_id))
 
     return render_template(template, title="Issues Detail", issue=issue, form=form, comments=comments)  
+
+@login_required
+@app.route('/edit/issue/<int:issue_id>/', methods=['GET', 'POST'])
+def edit_issue(issue_id):
+    template = 'core/edit_issue.html'
+    issue = Issue.query.get(issue_id)
+
+    form = EditIssueForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        new_title = form.title.data
+        new_description = form.description.data
+        issue.title = new_title
+        issue.description = new_description
+        db.session.commit()
+
+        flash('Issue updated successfully')
+        return redirect(url_for('issues_detail', issue_id=issue.id))
+
+    form.title.data = issue.title
+    form.description.data = issue.description
+
+    return render_template(template, title="Edit Repository", form=form)
 
 @app.route('/edit_issue_status/<int:issue_id>/', methods=['POST', 'GET'])
 @login_required

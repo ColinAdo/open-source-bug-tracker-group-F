@@ -62,3 +62,9 @@ class SettingsFrom(FlaskForm):
 class EditIssueStatusForm(FlaskForm):
     status = SelectField('Status', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class EditIssueForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description')
+    submit = SubmitField('Edit')

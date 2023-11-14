@@ -10,10 +10,10 @@
     </h3>
     {% else %}
 
-    {% if issues.count() == 1 %}
-        <h2>Issue #{{ issues.count() }}</h2>
+    {% if issues.count() > 0 %}    
+    <h2>Issues ({{ issues.count() }})</h2>
     {% else %}
-        <h2>Issues {{ issues.count() }}</h2>
+    <h2>No Issues yet</h2>
     {% endif %}
 
     {% for issue in issues %}
