@@ -1,8 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from enum import Enum as OptionEnum
 from flask_login import UserMixin
 from datetime import datetime
-from sqlalchemy import Enum
 from app import login
 from app import db
 from hashlib import md5
@@ -36,7 +34,6 @@ class Severity(db.Model):
     def __repr__(self):
         return '<Severity {}>'.format(self.title)
     
-
 class Status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), index=True) 
@@ -63,7 +60,6 @@ class Repository(db.Model):
     
     def __repr__(self):
         return '<Repository {}>'.format(self.title)
-
 
 class Issue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -94,7 +90,6 @@ class Issue(db.Model):
 
     def __repr__(self):
         return '<Issue {}>'.format(self.title)
-
     
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
