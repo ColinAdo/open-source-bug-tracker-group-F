@@ -3,43 +3,69 @@
 
 {% block content %}
 
-<span> 
+<div class="container mt-4">
+<h3 class="d-flex justify-content-center p-2"> 
         Repositories ({{count}})
-</span>
+</h3>
 
-{% if user == current_user %}
-    <p><a href="{{ url_for('edit_profile') }}">Edit profile</a></p>
-{% endif %}
-     <table>
+     <table class="d-flex justify-content-center">
         <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td> 
+            <td><img src="{{ user.avatar(128) }}" class="rounded-circle"></td> 
+        </tr>
+        <tr>
             <td>
-                <h1>{{ user.username }}</h1>
+                <h1 class="text-uppercase">{{ user.username }}
+                    {% if user == current_user %}
+                        <a href="{{ url_for('edit_profile') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                            <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                </h1>
 
                 {% if user.about_me %}
-                    <p>{{ user.about_me }}</p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                        </svg>
+                        {{ user.about_me }}
+                    </p>
                 {% endif %}
                 {% if user.location %}
-                    <p>Location: {{ user.location }}</p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                         {{ user.location }}
+                    </p>
                 {% endif %}
+                
             </td>
         </tr>
     </table>
     <hr>
+    {% if count > 0 %}
+    <small class="text-center d-flex justify-content-center fw-bolder">All your repositories</small>
+
     {% for repo in repos %}
-    <table>
+    <table class="d-flex justify-content-center">
         <tr valign="top">
             <td>
-                <a href="{{ url_for('profile', username=repo.user.username)}}">
-                    <img src="{{ repo.user.avatar(36) }}">
+                <a  href="{{ url_for('profile', username=repo.user.username)}}" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;">
+                    <img src="{{ repo.user.avatar(36) }}" class="rounded-circle">
                 </a>
-            </td> 
-            </td>
-                <a href="{{ url_for('repository_details',  repo_id=repo.id) }}">
+                <a class="icon-link icon-link-hover" href="{{ url_for('repository_details',  repo_id=repo.id) }}" style="--bs-link-hover-color-rgb: 25, 135, 84; text-decoration: none;">
                     {{ repo.title }}
                 </a>
-            </td>
-        </tr> <br>
+            </td> 
+        </tr> 
     </table>
     {% endfor %}
+
+    {% else %}
+    <small class="text-center d-flex justify-content-center fw-bolder">No repositories yet</small>
+    {% endif %}
+
+</div>
 {% endblock content %}
