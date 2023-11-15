@@ -87,7 +87,7 @@ def edit_repository(repository_id):
         repository.description = new_description
         db.session.commit()
 
-        flash('Comment updated successfully')
+        flash('Repository update successfully')
         return redirect(url_for('repository_details', repo_id=repository.id))  
     
     form.description.data = repository.description
