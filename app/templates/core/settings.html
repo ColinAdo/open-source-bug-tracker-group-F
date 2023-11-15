@@ -3,36 +3,71 @@
 
 {% block content %}
 
-<h3>Update Profile</h3>
+<div class="container mt-4">
+
+<h3 class="d-flex justify-content-center text-uppercase">Update Profile</h3>
 
 <form method="post" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32) }}<br>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+    <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+        </span>
+        {{ form.username(class="form-control", placeholder="Username", aria_describedby="addon-wrapping") }}
         {% for error in form.username.errors %}
-        <span style="color: red;">{{ error }}</span>
+            <span style="color: red;">{{ error }}</span>
         {% endfor %}
-    </p>
+    </div>
+    </div>
+</div>
 
-    <p>
-        {{ form.about_me.label }}<br>
-        {{ form.about_me(size=32) }}<br>
+<div class="row justify-content-center">
+        <div class="col-md-6">
+    <div class="input-group flex-nowrap mt-4">
+        <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-font-fill" viewBox="0 0 16 16">
+                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM5.057 6h5.886L11 8h-.5c-.18-1.096-.356-1.192-1.694-1.235l-.298-.01v5.09c0 .47.1.582.903.655v.5H6.59v-.5c.799-.073.898-.184.898-.654V6.755l-.293.01C5.856 6.808 5.68 6.905 5.5 8H5l.057-2z"/>
+            </svg>
+        </span>
+        {{ form.about_me(class="form-control", placeholder="About Me", aria_describedby="addon-wrapping") }}
         {% for error in form.about_me.errors %}
-        <span style="color: red;">{{ error }}</span>
+            <span style="color: red;">{{ error }}</span>
         {% endfor %}
-    </p>
+    </div>
+        </div>
+</div>
 
-    <p>
-        {{ form.location.label }}<br>
-        {{ form.location(size=32) }}<br>
+
+<div class="row justify-content-center">
+        <div class="col-md-6">
+    <div class="input-group flex-nowrap mt-4">
+        <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+            </svg>
+        </span>
+        {{ form.location(class="form-control", placeholder="Location", aria_describedby="addon-wrapping") }}
         {% for error in form.location.errors %}
-        <span style="color: red;">{{ error }}</span>
+            <span style="color: red;">{{ error }}</span>
         {% endfor %}
-    </p>
+    </div>
+</div>
+</div>
 
-    <p>{{ form.submit() }}</p>
+<div class="text-center">
+    <div class="mb-3 p-3">
+        {{ form.submit(class="btn btn-primary mr-5") }}
+        <a class="btn btn-danger" href="{{url_for('profile', username=current_user.username)}}">Back</a>
+    </div>
+    
+</div>
 </form>
 
+
+</div>
 {% endblock content %}
