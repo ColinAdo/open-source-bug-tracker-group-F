@@ -68,4 +68,4 @@ class EditIssueStatusForm(FlaskForm):
 class EditIssueForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description')
-    submit = SubmitField('Edit')
+    submit = SubmitField('Submit')
