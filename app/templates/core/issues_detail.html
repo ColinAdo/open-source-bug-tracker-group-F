@@ -2,42 +2,105 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-<h2>{{issue.title}} #{{issue.id}} <span>{{ issue.status.title }}</span>
-    <p> <span>{{ issue.status.title }}</span> <span>{{ issue.category.title }}</span> <span>{{ issue.severity.title }}</span></p>
-        
-<a href="{{ url_for('create_issue', repository_id=issue.repository_id )}}">New Issue</a>
-{% if current_user.username == issue.created_by.username %}
-<a href="{{ url_for('edit_issue', issue_id=issue.id )}}">Edit</a> 
+
+<div class="container mt-4">
+<h3 class="text-center">
+    {{issue.title}} #{{issue.id}}
+    <span>created on {{issue.created_at}}</span>
+</h3>
+<span class="d-flex justify-content-center">
+    <!-- status logic -->
+    {% if issue.status.title == 'Open' %}
+    <span class="btn btn-info">{{ issue.status.title }}</span>
+    {% elif issue.status.title == 'Closed' %}
+    <span class="btn btn-danger">{{ issue.status.title }}</span>
+    {% else %}
+    <span class="btn btn-success">{{ issue.status.title }}</span>
+    {% endif %} &nbsp;
+    <!-- category logic -->
+    {% if issue.category.title == 'Bug' %}
+    <span class="btn btn-warning">{{ issue.category.title }}</span>
+    {% elif issue.category.title == 'Feature' %}
+    <span class="btn btn-success-emphasis">{{ issue.category.title }}</span>
+    {% else %}
+    <span class="btn btn-secondary">{{ issue.category.title }}</span>
+    {% endif %} &nbsp;
+    <!-- severity logic -->
+    {% if issue.severity.title == 'Minor' %}
+    <span class="btn btn-dark">{{ issue.severity.title }}</span>
+    {% elif issue.severity.title == 'Major' %}
+    <span class="btn btn-prrmary">{{ issue.severity.title }}</span>
+    {% else %}
+    <span class="btn btn-danger-emphasis">{{ issue.severity.title }}</span>
+    {% endif %} &nbsp;
+    <a class="btn btn-light" href="{{ url_for('create_issue', repository_id=issue.repository_id )}}"> + </a>
+    {% if current_user.username == issue.created_by.username %}
+    <a class="btn btn-light text-primary" href="{{ url_for('edit_issue', issue_id=issue.id )}}">
+        Edit
+    </a> 
+    {% endif %}
+</span>
+
+<h3 class="fs-6 mt-3">{{issue.description}}</h3>
+
+
+{% if comments.count() > 0 %}
+<h3 class="text-uppercase text-center">Comments ({{comments.count()}})</h3>
 {% endif %}
-</h2>
-<p>{{issue.created_at}}</p>
-<p>{{issue.description}}</p>
-
-
-<h2>Comments ({{comments.count()}})</h2>
 
 {% for comment in comments %}
-<P>
-    <a href="{{ url_for('profile', username=comment.user.username) }}"><img src="{{comment.user.avatar(38)}}" alt="img"></a> {{comment.text}} {{comment.created_at}}
-    {% if current_user.username == comment.user.username %}
-    <a href="{{ url_for('edit_comment', comment_id=comment.id) }}">Edit</a> 
-    <a href="{{ url_for('delete_comment', comment_id=comment.id) }}">Delete</a>
-    {% endif %}
-</P>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-1 mb-2">
+        <a href="{{ url_for('profile', username=comment.user.username) }}" style="text-decoration: none;">
+            <img src="{{comment.user.avatar(38)}}" alt="img" class="rounded-circle">
+        </a>
+        <strong>{{comment.created_at}}</strong> 
+        {% if current_user.username == comment.user.username %}
+            <a class="btn btn-light btn-sm" href="{{ url_for('edit_comment', comment_id=comment.id) }}" style="text-decoration: none;">
+                Edit
+            </a> 
+            <a href="{{ url_for('delete_comment', comment_id=comment.id) }}" style="text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill text-danger" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+            </a>
+        {% endif %}
+    </div>
+    <div class="col-md-11">
+        <p>
+            {{comment.text}} 
+            
+        </p>
+    </div>
+</div>
 {% endfor %} 
 
-<h1>Add comment</h1>
-<form action="" method="post" novalidate>
+<h3 class="d-flex justify-content-center text-uppercase">Add comment</h3>
+
+<form method="post" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    <p>
-        {{ form.text.label }}<br>
-        {{ form.text() }}<br>
+
+<div class="row justify-content-center">
+        <div class="col-md-6">
+    <div class="input-group flex-nowrap mt-4">
+        <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+                <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+            </svg>
+        </span>
+        {{ form.text(class="form-control", placeholder="Comment", aria_describedby="addon-wrapping") }}
         {% for error in form.text.errors %}
-        <span style="color: red;">{{ error }}</span>
+            <span style="color: red;">{{ error }}</span>
         {% endfor %}
-    </p>
-    <p>{{ form.submit() }}</p>
+    </div>
+    </div>
+</div>
+<div class="text-center">
+    <div class="mb-3 p-3">
+        {{ form.submit(class="btn btn-primary mr-5") }}
+        <a class="btn btn-danger" href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Close Issue</a>
+    </div>
+</div>
 </form>
 
-<a href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Close Issue</a>
 {% endblock content %}
