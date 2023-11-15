@@ -3,18 +3,37 @@
 
 {% block content %}
 
-<h1>Edit Repository</h1>
-<form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.description.label }}<br>
-            {{ form.description() }}<br>
-            {% for error in form.description.errors %}
+<div class="container mt-4">
+
+<h3 class="d-flex justify-content-center text-uppercase">Update Repository</h3>
+
+<form method="post" action="" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+<div class="row justify-content-center">
+        <div class="col-md-6">
+    <div class="input-group flex-nowrap mt-4">
+        <span class="input-group-text" id="addon-wrapping">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg>
+        </span>
+        {{ form.description(class="form-control", placeholder="Description", aria_describedby="addon-wrapping") }}
+        {% for error in form.description.errors %}
             <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        
-        <p>{{ form.submit() }}</p>
-    </form>
+        {% endfor %}
+    </div>
+        </div>
+</div>
+
+
+<div class="text-center">
+    <div class="mb-3 p-3">
+        {{ form.submit(class="btn btn-primary mr-5") }}
+        <a class="btn btn-danger" href="{{url_for('repository_details', repo_id=repository.id)}}">Back</a>
+    </div>
+    
+</div>
+</form>
 
 {% endblock content %}                
