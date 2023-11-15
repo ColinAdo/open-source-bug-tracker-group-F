@@ -2,31 +2,79 @@
 {% block title %} {{title}} {% endblock title %}
 
 {% block content %}
-
+<div class="container mt-4">
 {% if issues.count() == 0 %}
 
-    <h3>No issue created for this repository 
+    <h3 class="text-uppercase text-center">No issue created for this repository 
         <a href="{{ url_for('create_issue', repository_id=repository.id ) }}">New Issue</a>
     </h3>
     {% else %}
 
     {% if issues.count() > 0 %}    
-    <h2>Issues ({{ issues.count() }})</h2>
+    <h2 class="text-uppercase text-center">Issues ({{ issues.count() }})</h2>
     {% else %}
-    <h2>No Issues yet</h2>
+    <h2 class="text-uppercase text-center">No Issues yet</h2>
     {% endif %}
 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">NAMES</th>
+      <th scope="col">STATUS</th>
+      <th scope="col">CATEGORY</th>
+      <th scope="col">SEVERITY</th>
+      <th scope="col">CREATED BY</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for issue in issues %}
-        <p> <span>{{ issue.status.title }}</span> <span>{{ issue.category.title }}</span> <span>{{ issue.severity.title }}</span></p>
-        <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}">
-            <p>Title: {{ issue.title }} </p>
+    <tr>
+      <td>
+        <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}" style="text-decoration: none;">
+            {{ issue.title }}
         </a>
-        <a href="{{ url_for('profile', username=issue.created_by.username)}}">
-            <img src="{{ issue.created_by.avatar(36) }}">
+      </td>
+      <td>
+        <!-- status logic -->
+        {% if issue.status.title == 'Open' %}
+        <span class="btn btn-info">{{ issue.status.title }}</span>
+        {% elif issue.status.title == 'Closed' %}
+        <span class="btn btn-danger">{{ issue.status.title }}</span>
+        {% else %}
+        <span class="btn btn-success">{{ issue.status.title }}</span>
+        {% endif %}
+      </td>
+      <td>
+        <!-- category logic -->
+        {% if issue.category.title == 'Bug' %}
+        <span class="btn btn-warning">{{ issue.category.title }}</span>
+        {% elif issue.category.title == 'Feature' %}
+        <span class="btn btn-success-emphasis">{{ issue.category.title }}</span>
+        {% else %}
+        <span class="btn btn-secondary">{{ issue.category.title }}</span>
+        {% endif %}
+      </td>
+      <td>
+        <!-- severity logic -->
+        {% if issue.severity.title == 'Minor' %}
+        <span class="btn btn-dark">{{ issue.severity.title }}</span>
+        {% elif issue.severity.title == 'Major' %}
+        <span class="btn btn-prrmary">{{ issue.severity.title }}</span>
+        {% else %}
+        <span class="btn btn-danger-emphasis">{{ issue.severity.title }}</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ url_for('profile', username=issue.created_by.username)}}" style="text-decoration: none;">
+            <img src="{{ issue.created_by.avatar(36) }}" class="rounded-circle">
         </a>
-
+      </td>
+    </tr>
     {% endfor %}
+  </tbody>
+</table>
 
 {% endif %}
 
+</div>
 {% endblock content %}
