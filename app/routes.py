@@ -92,7 +92,7 @@ def edit_repository(repository_id):
     
     form.description.data = repository.description
 
-    return render_template(template, title="Edit Repository", form=form)
+    return render_template(template, title="Edit Repository", form=form, repository=repository)
 
 @login_required
 @app.route('/<string:repository_id>/create_issue/', methods=['GET', 'POST'])
