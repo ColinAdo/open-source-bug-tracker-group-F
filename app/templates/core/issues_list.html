@@ -29,11 +29,11 @@
   <tbody>
     {% for issue in issues %}
     <tr>
-      <td>
+      <th scope="row">
         <a href="{{ url_for('issues_detail', issue_id=issue.id ) }}" style="text-decoration: none;">
             {{ issue.title }}
         </a>
-      </td>
+      </th>
       <td>
         <!-- status logic -->
         {% if issue.status.title == 'Open' %}
