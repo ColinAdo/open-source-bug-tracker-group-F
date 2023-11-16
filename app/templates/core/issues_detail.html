@@ -98,7 +98,14 @@
 <div class="text-center">
     <div class="mb-3 p-3">
         {{ form.submit(class="btn btn-primary mr-5") }}
-        <a class="btn btn-danger" href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Close Issue</a>
+
+        {% if current_user.username == issue.created_by.username %}
+            {% if issue.status.title == 'Open' %}
+            <a class="btn btn-danger" href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Close Issue</a>
+            {% elif issue.status.title == 'Closed' %}
+            <a class="btn btn-success" href="{{ url_for('edit_issue_status', issue_id=issue.id) }}">Reopen Issue</a>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 </form>
