@@ -19,6 +19,7 @@ instance/
 
 # Ignore database files 
 *.db
+*.txt
 
 # Ignore any sensitive or confidential information (e.g., secrets.env)
 secrets.env
