@@ -13,7 +13,6 @@ login.login_view = 'login'
 
 app.app_context().push()
 db.create_all()
-app.app_context().push()
 
 def truncate_words(text, n):
     words = text.split()
