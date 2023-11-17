@@ -12,6 +12,7 @@ instance/
 # Ignore IDE and editor files
 .vscode/
 .idea/
+.github/
 
 # Ignore log and backup files
 *.log
