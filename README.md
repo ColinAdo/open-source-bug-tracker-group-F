@@ -49,7 +49,9 @@ Remove this imports:
 **Rename the url_decode function in the file to MultiDict**
 **Rename urlencode function in the file to urlencode and then remove sort=True argument from the urlencode.**
 
-**To Run the application**
+**To Run the application locally**
 Run: 
-* **export FLASK_APP=groupf.py**
+* **Cone the code**
+* **pip install requirements.txt**
+* * **export FLASK_APP=application.py**
 * **flask run --debug # For debug mode**
