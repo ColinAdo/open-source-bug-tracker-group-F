@@ -53,5 +53,5 @@ Remove this imports:
 Run: 
 * **Cone the code**
 * **pip install requirements.txt**
-* * **export FLASK_APP=application.py**
+* **export FLASK_APP=application.py**
 * **flask run --debug # For debug mode**
