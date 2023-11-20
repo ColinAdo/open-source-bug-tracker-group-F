@@ -51,7 +51,7 @@ Remove this imports:
 
 **To Run the application locally**
 Run: 
-* **Cone the code**
+* **Clone the code**
 * **pip install requirements.txt**
 * **export FLASK_APP=application.py**
 * **flask run --debug # For debug mode**
