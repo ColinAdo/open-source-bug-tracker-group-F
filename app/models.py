@@ -5,6 +5,7 @@ from app import login
 from app import db
 from hashlib import md5
 
+# User model 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -26,7 +27,8 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
-    
+
+# Issue severity model
 class Severity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), index=True) 
@@ -34,6 +36,7 @@ class Severity(db.Model):
     def __repr__(self):
         return '<Severity {}>'.format(self.title)
     
+# Issue status model
 class Status(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), index=True) 
@@ -41,6 +44,7 @@ class Status(db.Model):
     def __repr__(self):
         return '<Status {}>'.format(self.title)
     
+# Issue category model
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), index=True)
@@ -48,6 +52,7 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category {}>'.format(self.title)
     
+# Repository model
 class Repository(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True, index=True)
@@ -61,6 +66,7 @@ class Repository(db.Model):
     def __repr__(self):
         return '<Repository {}>'.format(self.title)
 
+# Issue model
 class Issue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), index=True)
@@ -91,6 +97,7 @@ class Issue(db.Model):
     def __repr__(self):
         return '<Issue {}>'.format(self.title)
     
+# Comment model
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     issue_id = db.Column(db.Integer, db.ForeignKey('issue.id'), nullable=False)
@@ -102,6 +109,7 @@ class Comment(db.Model):
     def __repr__(self):
         return '<Comment {}>'.format(self.text)
     
+# get user id
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
