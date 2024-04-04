@@ -1,4 +1,4 @@
-# Open Source Issue Tracking Application Group F
+## Open Source Issue Tracking Application Group F
     
 ## User Registration and Authentication: Done 
 Users should be able to create accounts, log in, and log out securely. User authentication is essential to ensure that only authorized individuals can access and modify the issue-tracking system.
