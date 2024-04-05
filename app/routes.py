@@ -10,7 +10,6 @@ from app.forms import (
     EditRepositoryForm, SettingsFrom,
     EditIssueStatusForm, EditIssueForm)
 
-
 # This is route for home page
 @app.route('/')
 @login_required
