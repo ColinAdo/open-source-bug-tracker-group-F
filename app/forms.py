@@ -6,7 +6,7 @@ from wtforms import (
     BooleanField, SubmitField, 
     TextAreaField,SelectField )
 
-# Login form
+# Login form route
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
