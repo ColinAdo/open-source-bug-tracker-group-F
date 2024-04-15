@@ -8,7 +8,6 @@ class Config(object):
         f'postgresql://{os.environ.get("DB_USER")}:{os.environ.get("DB_PASS")}@localhost/groupf'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
 class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
