@@ -301,6 +301,5 @@ class TestLoginForm(unittest.TestCase):
                              password='testpassword', remember_me=True)
             self.assertTrue(form.validate())
 
-
 if __name__ == '__main__':
     unittest.main(verbosity=2)
