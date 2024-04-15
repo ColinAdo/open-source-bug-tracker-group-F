@@ -28,7 +28,7 @@ We need to ensure the application is responsive and can handle a significant num
 Regularly back up issue data to prevent data loss in case of system failures or data corruption.
 
 ##  User Interface (UI) Design: 
-We need to design an intuitive and user-friendly interface to make it easy for users to navigate and interact with the application.
+We need to design an intuitive and user-friendly interface to make it easy for users to navigate and interact with the appropriate. 
 
 ## Testing: 
 Follow a testing plan to ensure the application's functionality, security, and performance meet the specified requirements.
